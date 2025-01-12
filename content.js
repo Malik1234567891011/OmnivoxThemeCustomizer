@@ -4,30 +4,65 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       applyTheme(request.theme);
     }
   });
-  
-  // Function to apply the selected theme
-  function applyTheme(theme) {
+  // Apply the selected theme
+function applyTheme(theme) {
+    console.log("Applying theme:", theme); // Debugging log
     let css = "";
+  
     if (theme === "light") {
       css = `
-        body {
-          background-color: #ffffff;
-          color: #000000;
+        * {
+          background-color: #ffffff !important;
+          color: #000000 !important;
+          border-color: #ccc !important;
+        }
+        a {
+          color: #1a0dab !important;
         }
       `;
     } else if (theme === "dark") {
       css = `
-        body {
-          background-color: #000000;
-          color: #ffffff;
+        * {
+          background-color: #121212 !important;
+          color: #e0e0e0 !important;
+          border-color: #333 !important;
+        }
+        a {
+          color: #bb86fc !important;
+        }
+        img, video {
+          filter: brightness(0.8) !important;
+        }
+        .card, .box, .panel, .container, .widget, .block, .content, .section {
+          background-color: #1e1e1e !important;
+          border-color: #444 !important;
+        }
+        input, textarea, select, button {
+          background-color: #2a2a2a !important;
+          color: #e0e0e0 !important;
+          border-color: #555 !important;
         }
       `;
     }
   
-    // Inject the CSS into the page
-    const styleTag = document.getElementById("theme-styles") || document.createElement("style");
-    styleTag.id = "theme-styles";
+    let styleTag = document.getElementById("custom-theme-style");
+    if (!styleTag) {
+      styleTag = document.createElement("style");
+      styleTag.id = "custom-theme-style";
+      document.head.appendChild(styleTag);
+    }
     styleTag.textContent = css;
-    document.head.appendChild(styleTag);
   }
+  
+  
+  // Reapply the theme when the page updates dynamically
+  const observer = new MutationObserver(() => {
+    chrome.storage.sync.get("theme", (data) => {
+      if (data.theme) {
+        applyTheme(data.theme);
+      }
+    });
+  });
+  
+  observer.observe(document.body, { childList: true, subtree: true });
   
