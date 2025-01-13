@@ -7,6 +7,9 @@ document.getElementById("light-theme").addEventListener("click", () => {
     console.log("Dark theme button clicked"); // Debug line
     setTheme("dark");
   });
+  document.getElementById("colorblind-theme").addEventListener("click", () => {
+    setTheme("colorblind");
+  });
   
   function setTheme(theme) {
     console.log("Sending theme to content script:", theme); // Debug line
