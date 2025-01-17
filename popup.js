@@ -10,6 +10,9 @@ document.getElementById("light-theme").addEventListener("click", () => {
   document.getElementById("colorblind-theme").addEventListener("click", () => {
     setTheme("colorblind");
   });
+  document.getElementById("ocean-theme").addEventListener("click", () => {
+    setTheme("oceantheme");
+  });
   
   function setTheme(theme) {
     console.log("Sending theme to content script:", theme); // Debug line

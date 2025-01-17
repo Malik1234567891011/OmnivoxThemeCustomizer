@@ -91,7 +91,30 @@ chrome.storage.sync.get("theme", (data) => {
             border: 2px dashed #000000 !important;
           }
         `;
-      }
+      }else if (theme === "oceantheme") {
+        css = `
+          * {
+            background-color:rgb(28, 52, 148) !important;
+            color: #e0e0e0 !important;
+            border-color: #333 !important;
+          }
+          a {
+            color: #bb86fc !important;
+          }
+          img, video {
+            filter: brightness(0.8) !important;
+          }
+          .card, .box, .panel, .container, .widget, .block, .content, .section,
+          .main, .content-wrapper, .calendar, .assignment, .announcement, .classroom {
+            background-color:rgb(11, 27, 174) !important;
+            border-color: #444 !important;
+          }
+          input, textarea, select, button {
+            background-color:rgb(119, 54, 224) !important;
+            color:rgb(162, 168, 214) !important;
+            border-color: #555 !important;
+          }
+        `;}
   
     let styleTag = document.getElementById("custom-theme-style");
     if (!styleTag) {
@@ -100,7 +123,8 @@ chrome.storage.sync.get("theme", (data) => {
       document.head.appendChild(styleTag);
     }
     styleTag.textContent = css;
-  }
+}
+
   
   
   // Reapply the theme when navigating to a new page or loading new content
